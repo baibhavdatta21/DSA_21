@@ -1,0 +1,78 @@
+This is an imp problem
+problem link-> https://leetcode.com/problems/design-add-and-search-words-data-structure/
+
+Basic dfs and bfs are important parts of trie we might have to apply dfs quite a few times while learning tries.
+
+when ever we encounter a '.' we will have to look for all the options we have thus we go for dfs.
+
+Tc-> O(M* N^26)
+SC-> O(M)
+
+M is the number of normal letters
+N is the number of '.'
+
+class Node
+{
+  public:
+    Node* links[26];
+    int is_end=0;
+};
+class WordDictionary {
+public:
+     Node * root;
+    WordDictionary() 
+    {
+        root=new Node();
+    }
+    
+    void addWord(string word) 
+    {
+        Node* dum=root;
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[word[i]-'a']==NULL)
+            {
+                dum->links[word[i]-'a']=new Node();
+            }
+            dum=dum->links[word[i]-'a'];
+        }
+        dum->is_end=1;
+    }
+    
+    bool solver(string word,Node* dum)
+    {
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(word[i]=='.')
+            {
+                for(char ch='a';ch<='z';ch++)
+                {
+                    if(dum->links[ch-97]!=NULL)
+                    {
+                        if(solver(word.substr(i+1),dum->links[ch-97]))
+                        {
+                            return true;
+                        }
+                        
+                    }
+                }  
+                return false;
+                
+            }
+            else
+            {
+                if(dum->links[word[i]-'a']==NULL)
+                    return false;
+                dum=dum->links[word[i]-'a'];
+            }
+            
+        }
+        return dum->is_end;
+    }
+    bool search(string word) 
+    {
+        Node* dum=root;
+        return solver(word,dum);
+    }
