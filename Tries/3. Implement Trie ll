@@ -1,0 +1,88 @@
+Problem link-> https://www.codingninjas.com/codestudio/problems/implement-trie_1387095?utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_tries_videos&leftPanelTab=1
+
+
+Time complexity: O(N * L) 
+        insert - O(N)
+        countWordsEqualTo - O(N)
+        countWordsStartingWith - O(N)
+        erase - O(N)
+	Space complexity: O(N * L) 
+
+	Where 'N' and 'L' represents the numbers of words 
+	and the longest word in words.
+  
+#include <bits/stdc++.h> 
+class Node
+{
+    public:
+    Node* links[26];
+    int count=0;
+    int flag=0;
+};
+class Trie
+{   
+    private:
+    Node* root;
+    public:
+     Trie()
+    {
+         root=new Node();
+    }
+    void insert(string &words)
+    {
+        Node* dum=root;
+        int n=words.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[words[i]-'a']==NULL)
+            {
+                dum->links[words[i]-'a']=new Node();
+            }
+            dum=dum->links[words[i]-'a'];
+            dum->count++;
+        }
+        dum->flag++;
+    }
+
+    int countWordsEqualTo(string &words)
+    {
+        Node* dum=root;
+        int n=words.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[words[i]-'a']!=NULL)
+            dum=dum->links[words[i]-'a'];
+            else 
+                return 0;
+        }
+        
+        return dum->flag;
+        return 0;
+    }
+
+    int countWordsStartingWith(string &words)
+    {
+        Node* dum=root;
+        int n=words.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[words[i]-'a']!=NULL)
+            dum=dum->links[words[i]-'a'];
+            else 
+                return 0;
+        }
+        return dum->count;
+    }
+
+    void erase(string &words)
+    {
+        Node* dum=root;
+        int n=words.size();
+        for(int i=0;i<n;i++)
+        {
+            dum=dum->links[words[i]-'a'];
+            dum->count--;
+        }
+        dum->flag--;
+    }
+};
