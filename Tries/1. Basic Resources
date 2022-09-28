@@ -1,4 +1,5 @@
 Article -> https://www.topcoder.com/thrive/articles/Using%20Tries (Best) [Note why tries over map/set]
+        -> https://iq.opengenus.org/time-complexity-of-trie/#:~:text=The%20space%20complexity%20of%20creating,of%20words%20in%20the%20trie. [Time and space comp analysis]
         -> https://leetcode.com/explore/learn/card/trie/ (Fraz Sheet) [Note the applications of Tries]
         
 Vid ref -> https://www.youtube.com/playlist?list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp (Note the Bit manipulation probs)
