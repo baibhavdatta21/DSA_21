@@ -1,0 +1,77 @@
+It is a direct appliction of tries
+tries and back tracking is used here
+VVI
+
+class Node
+{
+    public:
+    Node* links[26];
+    int end=0;
+};
+void insert(Node* root,vector<string>&lst)
+{
+    int n=lst.size();
+    for(int i=0;i<n;i++)
+    {
+        Node* dum=root;
+        for(int j=0;j<lst[i].size();j++)
+        {
+            if(dum->links[lst[i][j]-'a']==NULL)
+            {
+                dum->links[lst[i][j]-'a']=new Node();
+            }
+            dum=dum->links[lst[i][j]-'a'];
+        }
+        dum->end=1;
+    }
+}
+void solve(int i,Node* dum3,string hold,vector<string>&temp)
+{
+    Node* dum2=dum3;
+    if(dum2->end==1)
+    {
+        temp.push_back(hold);
+    }
+  
+    for(int index=0;index<26;index++)
+    { 
+        if(dum2->links[index]!=NULL)
+        {
+            hold+=index+'a';
+            //cout<<hold<<endl;
+            solve(i,dum2->links[index],hold,temp);
+            hold.pop_back();
+        }
+     }
+}
+void solver(string &s,Node* root,vector<vector<string>>& ans)
+{
+    Node* dum=root;
+    int n=s.size();
+    string hold="";
+    for(int i=0;i<n;i++)
+    {
+        hold+=s[i];
+        //cout<<hold<<endl;
+        if(dum->links[s[i]-'a']!=NULL)
+        {
+            dum=dum->links[s[i]-'a'];
+            vector<string>temp;
+            solve(i,dum,hold,temp);
+            ans.push_back(temp);
+            temp.clear();
+            
+        }
+        else
+            break;
+    }
+}
+vector<vector<string>> phoneDirectory(vector<string>&lst, string &s)
+{
+    Node* root=new Node();
+    insert(root,lst);
+    int n=s.size();
+    vector<vector<string>>ans;
+    solver(s,root,ans);
+    return ans;
+}
