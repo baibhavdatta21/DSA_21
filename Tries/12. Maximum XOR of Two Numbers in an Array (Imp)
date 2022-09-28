@@ -1,0 +1,55 @@
+VVVI Xor and tries have a relation we must remeber it.
+for ref watch striver's vid.
+class Node
+{
+    public:
+    Node* links[2];
+};
+class Solution {
+public:
+    void create_trie(vector<int>& nums,Node* root)
+    {
+        Node* dum=root;
+        int n=nums.size();
+        
+        for(int i=0;i<n;i++)
+        {
+            Node* dum2=dum;
+            for(int j=31;j>=0;j--)
+            {
+                if(dum2->links[(nums[i]>>j)&1]==NULL)
+                {
+                    dum2->links[(nums[i]>>j)&1]=new Node();
+                }
+                dum2=dum2->links[(nums[i]>>j)&1];
+            }
+        }
+    }
+    int check(int x,Node* root)
+    {
+        Node* dum=root;
+        int maxi=0;
+        for(int i=31;i>=0;i--)
+        {
+            int want=1-((x>>i)&1);
+            if(dum->links[want]!=NULL)
+            {
+                maxi|=(1<<i);
+                dum=dum->links[want];
+            }
+            else
+                dum=dum->links[1-want];
+        }
+        //cout<<maxi<<endl;
+        return maxi;
+    }
+    int findMaximumXOR(vector<int>& nums) 
+    {
+        Node* root=new Node();
+        create_trie(nums,root);
+        int maxi=0;
+        for(int i=0;i<nums.size();i++)
+        maxi=max(maxi,check(nums[i],root));
+        return maxi;
+    }
+};
