@@ -1,0 +1,66 @@
+Problem link-> https://leetcode.com/problems/implement-trie-prefix-tree/
+
+Tc->O(n)[for all operations]
+Sc->O(n)[for insertions] O(1)[for others]
+
+Had we used sets/maps-> We will have to find all the prefixes and then insert it in the set insertions will take a tc of O(log n) each, and easly more than O(nlogn) as 
+we are taking in all the prefixes as well.
+class Node
+{
+    public:
+    vector<Node*>links;
+    bool flag;
+    Node()
+    {
+        flag=false;
+        links.resize(26);
+    }
+};
+class Trie {
+public:
+    Node* root;
+    Trie() {
+        root=new Node();
+    }
+    
+    void insert(string word) 
+    {
+        Node* dum=root;
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[word[i]-'a']==NULL)
+            {
+               dum->links[word[i]-'a']=new Node();
+            }
+            dum=dum->links[word[i]-'a'];
+        }
+        dum->flag=true;
+    }
+    
+    bool search(string word) 
+    {
+        Node* dum=root;
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[word[i]-'a']==NULL)
+                return false;
+            dum=dum->links[word[i]-'a'];
+        }
+        return dum->flag;
+    }
+    
+    bool startsWith(string word) 
+    {
+        Node* dum=root;
+        int n=word.size();
+        for(int i=0;i<n;i++)
+        {
+            if(dum->links[word[i]-'a']==NULL)
+                return false;
+            dum=dum->links[word[i]-'a'];
+        }
+        return true;
+    }
+};
