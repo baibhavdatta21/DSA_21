@@ -1,0 +1,53 @@
+Note-> It came as the 4th problem in a recent leetcode contest couldn't solve it back then, but next time be ready
+Easy trie problem but marked under hard.
+
+
+problem link-> https://leetcode.com/problems/sum-of-prefix-scores-of-strings/
+TC-> O(n*l) 
+SC-> O(l*l)
+
+here n=no of words and l is the max length
+
+Note This problem wont be accepted if try to solve it by using set or map, as we wil have to insert every word and its prefix, while finding also we will have to do the 
+same thus it is not the optimal approach.
+
+
+class Node
+{
+    public:
+    Node* links[26];
+    int count=0;
+};
+class Solution {
+public:
+    vector<int> sumPrefixScores(vector<string>& w)
+    {
+        int n=w.size();
+        Node* root=new Node();
+        for(int i=0;i<n;i++)
+        {
+            Node* dum=root;
+            for(int j=0;j<w[i].size();j++)
+            {
+                if(dum->links[w[i][j]-'a']==NULL)
+                {
+                    dum->links[w[i][j]-'a']=new Node();
+                }
+                dum=dum->links[w[i][j]-'a'];
+                dum->count++;
+            }
+        }
+        vector<int>ans;
+        for(int i=0;i<n;i++)
+        {
+            Node* dum=root;
+            int sum=0;
+            for(int j=0;j<w[i].size();j++)
+            {
+                dum=dum->links[w[i][j]-'a'];
+                sum+=dum->count;
+            }
+            ans.push_back(sum);
+        }
+        return ans;
+    }
