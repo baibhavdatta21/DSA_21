@@ -1,0 +1,38 @@
+problem link-> https://practice.geeksforgeeks.org/problems/unique-rows-in-boolean-matrix/1
+
+Basic implementtion using bit manipulations
+
+
+Tc-> O(rows* cols)
+Tc-> O(rows*cols)
+
+class Node
+{
+    public:
+    Node* links[2];
+    int is_end=0;
+};
+vector<vector<int>> uniqueRow(int nums[MAX][MAX],int row,int col)
+{
+    vector<vector<int>> ans;
+    Node*root=new Node();
+    
+    for(int i=0;i<row;i++)
+    {
+        Node* dum=root;
+        vector<int>temp;
+        for(int j=0;j<col;j++)
+        {
+            if(dum->links[nums[i][j]]==NULL)
+            dum->links[nums[i][j]]=new Node();
+            dum=dum->links[nums[i][j]];
+            temp.push_back(nums[i][j]);
+        }
+        if(dum->is_end==0)
+        {
+            ans.push_back(temp);
+            dum->is_end=1;
+        }
+    }
+   return ans;
+}
