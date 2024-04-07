@@ -58,15 +58,15 @@ public:
             par[i]=i;
         }
     }
-    int find_par(int i){
+    int findUPar(int i){
         if(i==par[i])
             return i;
 
-        return par[i]=find_par(par[i]);
+        return par[i]=findUPar(par[i]);
     }
     void uni(int u1,int v1){
-        int u=par[u1];
-        int v=par[v1];
+        int u=findUPar(u1);
+        int v=findUPar(v1);
         if(u==v){
             return;
         }
